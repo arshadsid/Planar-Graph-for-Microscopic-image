@@ -28,7 +28,7 @@ extern std::vector<Point> shifts8;
 extern std::vector<Point> shifts4;
 
 bool Edge_Thinning (Mat const&, Mat_<bool>&, std::vector<int>&, bool&, std::string);
-bool Save_Mask (Mat const&, Mat const&, std::string);
+Mat Save_Mask (Mat const&, Mat const&, std::string);
 bool Remove_External_Pixels (Mat_<bool>&);
 bool Add_Internal_Pixels (Mat_<bool>&);
 bool Neighbors (Mat_<bool>const&, Point, std::vector<Point>const&, int&, std::vector<bool>&);
