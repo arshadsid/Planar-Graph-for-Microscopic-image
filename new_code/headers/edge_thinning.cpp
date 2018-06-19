@@ -350,6 +350,13 @@ bool Pixels_to_Graph (Mat_<bool>const& mask, bool object, Graph& graph)
             if ( mask.at<bool>( p0 ) != object or mask.at<bool>( p1 ) != object ) continue;
             boost::add_edge( pixels_vertices[ p0 ], pixels_vertices[ p1 ], graph );
         }
+    
+    //Add diagonal edges
+    for (int row = 0; row + 1 < mask.rows; row++)
+        for(int col=0; col + 1 < mask.cols; col++){
+            Point p0(col, row), p1(col + 1, row + 1);
+            if ( mask.at<bool>( p0 ) != object or mask.at<bool>( p1 ) != object) continue;
+            boost::add_edge(pixels_vertices[ p0 ], pixels_vertices[ p1 ], graph);
     return true;
 }
 
