@@ -350,6 +350,26 @@ bool Pixels_to_Graph (Mat_<bool>const& mask, bool object, Graph& graph)
             if ( mask.at<bool>( p0 ) != object or mask.at<bool>( p1 ) != object ) continue;
             boost::add_edge( pixels_vertices[ p0 ], pixels_vertices[ p1 ], graph );
         }
+    
+    //Add diagonal edges from top left
+    for (int row = 0; row < mask.rows - 1; row++)
+        for(int col=0; col < mask.cols - 1; col++){
+            Point p0(col, row), p1(col + 1, row), p2(col + 1, row + 1), p3(col, row + 1);
+            //NOT add diagonal edges if already connected.
+            if ( mask.at<bool>( p0 ) != object or mask.at<bool>( p2 ) != object or mask.at<bool>(p1 ) == object or mask.at<bool>(p3 ) == object) continue;
+            boost::add_edge(pixels_vertices[ p0 ], pixels_vertices[ p2 ], graph);
+            
+        }
+    //Add diagonal edges from top-right
+    for (int row = 0; row < mask.rows - 1; row++)
+        for(int col = mask.cols-1 ; col > 1; col--){
+            Point p0(col, row), p1(col - 1, row), p2(col - 1, row + 1), p3(col, row + 1);
+            //NOT add diagonal edges if already connected.
+            if ( mask.at<bool>( p0 ) != object or mask.at<bool>( p2 ) != object or mask.at<bool>(p1 ) == object or mask.at<bool>(p3 ) == object) continue;
+            boost::add_edge(pixels_vertices[ p0 ], pixels_vertices[ p2 ], graph);
+            
+        }
+    
     return true;
 }
 
